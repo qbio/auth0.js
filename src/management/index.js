@@ -26,7 +26,16 @@ function Management(options) {
   this.baseOptions.headers = { Authorization: 'Bearer ' + this.baseOptions.token };
 
   this.request = new RequestBuilder(this.baseOptions);
-  this.baseOptions.rootUrl = urljoin('https://' + this.baseOptions.domain, 'api', 'v2');
+
+  var rootUrl = null;
+
+  if (this.baseOptions.domain.startsWith('https://') || this.baseOptions.domain.startsWith('http://')) {
+    rootUrl = this.baseOptions.domain;
+  } else {
+    rootUrl = 'https://' + this.baseOptions.domain;
+  }
+
+  this.baseOptions.rootUrl = urljoin(rootUrl, 'api', 'v2');
 }
 
 /**
